@@ -43,5 +43,5 @@ yarn-error.log*
 
 #chef
 local-mode-cache/
-chef_guid/
+chef_guid
 nodes/
