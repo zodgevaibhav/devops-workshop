@@ -10,6 +10,7 @@ docker run -it --rm docker.io/library/chef-solo:latest
 
 ## Run Cookbook
 ```sh
+export CHEF_LICENSE=accept
 chef-solo -c /chef/solo/solo.rb -o recipe[my_cookbook]
 ```
 
