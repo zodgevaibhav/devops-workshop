@@ -1,0 +1,33 @@
+# Use an official Ubuntu image
+FROM --platform=linux/amd64 ubuntu:20.04
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    sudo \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
+# Download and install Chef Workstation dynamically
+RUN curl -L https://omnitruck.chef.io/install.sh | bash -s -- -P chef-workstation
+
+# Create Chef Solo directories
+RUN mkdir -p /chef/cookbooks/my_cookbook/recipes /chef/solo
+
+# Add a basic cookbook with a recipe
+RUN echo "file '/tmp/hello_chef.txt' do \
+  content 'Hello from Chef Solo in Docker!' \
+end" > /chef/cookbooks/my_cookbook/recipes/default.rb
+
+# Create Chef Solo configuration file
+RUN echo "cookbook_path ['/chef/cookbooks']" > /chef/solo/solo.rb
+
+# Set the working directory
+WORKDIR /chef
+
+# Run Chef Solo when the container starts
+#CMD ["chef-solo", "-c", "/chef/solo/solo.rb", "-o", "recipe[my_cookbook]"]
+CMD ["bash"]

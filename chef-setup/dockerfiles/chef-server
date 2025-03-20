@@ -1,0 +1,24 @@
+FROM --platform=linux/amd64 ubuntu:20.04
+
+# Install dependencies
+RUN apt update && apt install -y curl sudo
+
+# Download and install Chef Server
+RUN curl -L https://packages.chef.io/files/stable/chef-server/14.11.21/ubuntu/20.04/chef-server-core_14.11.21-1_amd64.deb -o chef-server.deb && \
+    dpkg -i chef-server.deb && \
+    rm -f chef-server.deb
+
+# Accept the Chef License
+ENV CHEF_LICENSE=accept
+
+RUN apt-get install -y iproute2
+
+# Configure Chef Server
+RUN chef-server-ctl reconfigure
+
+# Expose required ports
+EXPOSE 80 443
+
+# Start Chef Server
+#CMD ["chef-server-ctl", "reconfigure", "--chef-license", "accept"]
+CMD ["bash"]

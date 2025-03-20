@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  chef-server:
+    image: chef/chef-server-nginx:latest
+    container_name: chef-server
+    hostname: chef-server
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - chef-server-data:/var/opt/opscode
+    environment:
+      - CHEF_SERVER_ACCEPT_LICENSE=true
+
+  chef-workstation:
+    image: chef/chef-workstation:latest
+    container_name: chef-workstation
+    hostname: chef-workstation
+    depends_on:
+      - chef-server
+    volumes:
+      - chef-workstation-data:/home/chef
+    environment:
+      - CHEF_ACCEPT_LICENSE=true
+
+  chef-client:
+    image: chef/chef:latest
+    container_name: chef-client
+    hostname: chef-client
+    depends_on:
+      - chef-server
+    volumes:
+      - chef-client-data:/etc/chef
+    environment:
+      - CHEF_ACCEPT_LICENSE=true
+
+volumes:
+  chef-server-data:
+  chef-workstation-data:
+  chef-client-data:

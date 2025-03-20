@@ -1,0 +1,10 @@
+FROM --platform=linux/amd64 ubuntu:20.04
+
+# Install dependencies
+RUN apt update && apt install -y curl sudo
+
+# Install Chef Client
+RUN curl -L https://omnitruck.chef.io/install.sh | bash
+
+# Start the container
+CMD ["tail", "-f", "/dev/null"]

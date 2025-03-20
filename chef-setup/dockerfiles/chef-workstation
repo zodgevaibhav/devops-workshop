@@ -1,0 +1,15 @@
+FROM --platform=linux/amd64 ubuntu:20.04
+
+# Install dependencies
+RUN apt update && apt install -y curl sudo
+
+# Download and install Chef Workstation
+RUN curl -L https://packages.chef.io/files/stable/chef-workstation/23.12.1062/ubuntu/20.04/chef-workstation_23.12.1062-1_amd64.deb -o chef-workstation.deb && \
+    dpkg -i chef-workstation.deb && \
+    rm -f chef-workstation.deb
+
+# Set up Chef repo
+RUN mkdir -p /home/chef-repo/.chef
+
+# Expose Chef Workstation CLI
+CMD ["tail", "-f", "/dev/null"]
