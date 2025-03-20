@@ -1,5 +1,3 @@
-```markdown
-
 # Docker Build Commands for Chef Servers, Chef Client, and Chef Workstation
 ## Build image
 ```sh
@@ -33,5 +31,4 @@ docker build -t chef-client:latest -f dockerfiles/chef-node .
 To build a Docker image for the Chef Workstation, use the following command:
 ```sh
 docker build -t chef-workstation:latest -f dockerfiles/chef-workstation .
-```
 ```
