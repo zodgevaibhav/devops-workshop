@@ -1,4 +1,4 @@
-# Docker Build Commands for Chef Servers, Chef Client, and Chef Workstation
+# Docker Build Commands for Chef Solo
 ## Build image
 ```sh
 docker build -t chef-solo:latest -f dockerfiles/chef-solo .
